@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { KatexView } from './KatexView';
+import { KatexView, MathText } from './KatexView';
 import { BookOpen, Info } from 'lucide-react';
 
 interface FormulaCardProps {
@@ -48,7 +48,9 @@ export const FormulaCard: React.FC<FormulaCardProps> = ({
       {stepDescription && (
         <div className="flex items-start space-x-2 bg-neutral-950/40 p-3 rounded-xl border border-neutral-800/50 text-xs text-neutral-300">
           <Info className="w-4 h-4 text-indigo-400 mt-0.5 shrink-0" />
-          <p className="leading-relaxed">{stepDescription}</p>
+          <p className="leading-relaxed">
+            <MathText text={stepDescription} />
+          </p>
         </div>
       )}
     </div>

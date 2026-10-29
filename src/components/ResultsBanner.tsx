@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { CalculationResult, CalculationMode } from '@/types/distributions';
-import { Copy, Check, TrendingUp } from 'lucide-react';
+import { KatexView } from './KatexView';
+import { Copy, Check } from 'lucide-react';
 
 interface ResultsBannerProps {
   result: CalculationResult;
@@ -23,27 +24,54 @@ export const ResultsBanner: React.FC<ResultsBannerProps> = ({
 }) => {
   const [copied, setCopied] = useState(false);
 
-  const getExpressionText = () => {
+  const getExpressionLatex = () => {
     if (mode === 'inverse') {
-      return `Cuantil F⁻¹(${result.probability}) = ${result.inverseX?.toFixed(5)}`;
+      return `F^{-1}(\\alpha = ${result.probability.toFixed(4)})`;
     }
     const varSymbol = isDiscrete ? 'k' : 'x';
+    const xFmt = isDiscrete ? `${Math.round(x)}` : `${x.toFixed(3)}`;
+    const x1Fmt = isDiscrete ? `${Math.round(x1)}` : `${x1.toFixed(3)}`;
+    const x2Fmt = isDiscrete ? `${Math.round(x2)}` : `${x2.toFixed(3)}`;
+
     switch (mode) {
       case 'left':
-        return `P(X ≤ ${isDiscrete ? Math.round(x) : x.toFixed(3)})`;
+        return `P(X \\le ${xFmt})`;
       case 'right':
-        return `P(X ≥ ${isDiscrete ? Math.round(x) : x.toFixed(3)})`;
+        return `P(X \\ge ${xFmt})`;
       case 'between':
-        return `P(${isDiscrete ? Math.round(x1) : x1.toFixed(3)} ≤ X ≤ ${isDiscrete ? Math.round(x2) : x2.toFixed(3)})`;
+        return `P(${x1Fmt} \\le X \\le ${x2Fmt})`;
       case 'outside':
-        return `P(X < ${isDiscrete ? Math.round(x1) : x1.toFixed(3)} ∪ X > ${isDiscrete ? Math.round(x2) : x2.toFixed(3)})`;
+        return `P(X < ${x1Fmt} \\cup X > ${x2Fmt})`;
       case 'exact':
-        return `P(X = ${isDiscrete ? Math.round(x) : x.toFixed(3)})`;
+        return `P(X = ${xFmt})`;
+    }
+  };
+
+  const getPlainText = () => {
+    if (mode === 'inverse') {
+      return `Cuantil F⁻¹(α = ${result.probability.toFixed(4)}) = ${result.inverseX?.toFixed(5)}`;
+    }
+    const xFmt = isDiscrete ? Math.round(x) : x.toFixed(3);
+    const x1Fmt = isDiscrete ? Math.round(x1) : x1.toFixed(3);
+    const x2Fmt = isDiscrete ? Math.round(x2) : x2.toFixed(3);
+    switch (mode) {
+      case 'left':
+        return `P(X ≤ ${xFmt})`;
+      case 'right':
+        return `P(X ≥ ${xFmt})`;
+      case 'between':
+        return `P(${x1Fmt} ≤ X ≤ ${x2Fmt})`;
+      case 'outside':
+        return `P(X < ${x1Fmt} ∪ X > ${x2Fmt})`;
+      case 'exact':
+        return `P(X = ${xFmt})`;
     }
   };
 
   const handleCopy = () => {
-    const textToCopy = `${getExpressionText()} = ${result.formattedProbability} (${result.percentage})`;
+    const textToCopy = `${getPlainText()} = ${
+      mode === 'inverse' ? result.inverseX?.toFixed(5) : `${result.formattedProbability} (${result.percentage})`
+    }`;
     navigator.clipboard.writeText(textToCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -56,9 +84,9 @@ export const ResultsBanner: React.FC<ResultsBannerProps> = ({
 
       <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <div className="flex items-center space-x-2 mb-1.5">
-            <span className="text-xs font-semibold uppercase tracking-wider text-indigo-400 font-mono">
-              {getExpressionText()}
+          <div className="flex items-center space-x-2.5 mb-2">
+            <span className="text-sm font-semibold text-indigo-300">
+              <KatexView math={getExpressionLatex()} />
             </span>
             <span className="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">
               Resultado
