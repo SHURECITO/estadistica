@@ -1,36 +1,70 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DistriLab - Calculadora Interactiva de Distribuciones Estadísticas
 
-## Getting Started
+Aplicación interactiva fullstack construida con **Next.js (App Router)**, **TypeScript**, **Tailwind CSS** y **KaTeX**, lista para desplegarse en **Vercel**.
 
-First, run the development server:
+## 📊 Distribuciones Soportadas
+
+1. **Normal y Normal Estándar ($Z$):** Parámetros $\mu$ y $\sigma$ con botón de acceso rápido para Normal Estándar ($\mu=0, \sigma=1$).
+2. **t de Student:** Parámetro $\nu$ (grados de libertad) con colas ajustables.
+3. **Chi-cuadrado ($\chi^2$):** Parámetro $\nu$ (grados de libertad).
+4. **F de Fisher-Snedecor:** Parámetros $df_1$ (numerador) y $df_2$ (denominador).
+5. **Gamma:** Parámetros de forma ($k$ o $\alpha$) y escala ($\theta$).
+6. **Binomial:** Ensayos $n$ y probabilidad de éxito $p$.
+7. **Poisson:** Tasa media de eventos $\lambda$.
+
+---
+
+## 🚀 Características Principales
+
+* **Gráficos Interactivos SVG:**
+  * Curvas suaves de densidad con sombreado dinámico de áreas bajo la curva.
+  * Gráficos de barras para distribuciones discretas resaltando los valores seleccionados.
+  * Marcadores verticales de corte en $x, x_1, x_2$.
+  * Tooltip interactivo con coordenadas $(x, f(x))$ y masa puntual en tiempo real.
+* **Modos de Cálculo:**
+  * Cola izquierda: $P(X \le x)$
+  * Cola derecha: $P(X \ge x)$
+  * Intervalo central: $P(x_1 \le X \le x_2)$
+  * Dos colas / Exteriores: $P(X < x_1 \cup X > x_2)$
+  * Probabilidad puntual: $P(X = x)$ (discretas)
+  * Modo inverso (Cuantiles): Encuentra el valor crítico $x^*$ dada la significancia o probabilidad acumulada $\alpha$.
+* **Estadísticos en Vivo:**
+  * Media ($\mu$), Varianza ($\sigma^2$), Desviación Estándar ($\sigma$), Asimetría ($\gamma_1$) y Exceso de Curtosis ($\gamma_2$).
+* **Fórmulas con KaTeX:**
+  * Desglose paso a paso con sustitución de variables en $\LaTeX$.
+* **Tabla de Probabilidades Exportable:**
+  * Vista tabular con exportación a archivo CSV.
+* **Backend API REST en Vercel:**
+  * Endpoint `POST /api/distribution` y `GET /api/distribution` que permite consumir los cálculos como servicio web.
+
+---
+
+## 🛠️ Ejecución Local
 
 ```bash
+# Instalar dependencias
+npm install
+
+# Modo desarrollo
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# Compilar para producción
+npm run build
+npm run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre tu navegador en `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🌐 Despliegue en Vercel
 
-## Learn More
+### Opción 1: Conectar con GitHub (Recomendado)
+1. Sube este repositorio a tu cuenta de GitHub.
+2. Ingresa a [vercel.com](https://vercel.com) e importa el repositorio.
+3. Vercel detectará automáticamente Next.js. Haz clic en **Deploy**.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Opción 2: Vercel CLI
+```bash
+npx vercel
+```
