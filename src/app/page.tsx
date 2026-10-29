@@ -117,38 +117,6 @@ export default function Home() {
     setX2Val(1.96);
   };
 
-  const handleSelectPreset = (presetId: string) => {
-    if (presetId === 'rule_68_95_99') {
-      setSelectedType('normal');
-      setParamsState((prev) => ({ ...prev, normal: { mean: 0, std: 1 } }));
-      setMode('between');
-      setX1Val(-1.96);
-      setX2Val(1.96);
-    } else if (presetId === 't_student_p05') {
-      setSelectedType('studentt');
-      setParamsState((prev) => ({ ...prev, studentt: { df: 10 } }));
-      setMode('outside');
-      setX1Val(-2.228);
-      setX2Val(2.228);
-    } else if (presetId === 'chi_p05') {
-      setSelectedType('chisquare');
-      setParamsState((prev) => ({ ...prev, chisquare: { df: 5 } }));
-      setMode('right');
-      setXVal(11.07);
-    } else if (presetId === 'poisson_rare') {
-      setSelectedType('poisson');
-      setParamsState((prev) => ({ ...prev, poisson: { lambda: 4 } }));
-      setMode('exact');
-      setXVal(2);
-    } else if (presetId === 'binomial_coins') {
-      setSelectedType('binomial');
-      setParamsState((prev) => ({ ...prev, binomial: { n: 20, p: 0.5 } }));
-      setMode('between');
-      setX1Val(8);
-      setX2Val(12);
-    }
-  };
-
   // Test backend API route
   const handleTestApi = async () => {
     setApiTesting(true);
@@ -194,10 +162,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-neutral-950 text-neutral-100">
       {/* Top Header */}
-      <Header
-        onOpenHelp={() => setIsHelpOpen(true)}
-        onSelectPreset={handleSelectPreset}
-      />
+      <Header onOpenHelp={() => setIsHelpOpen(true)} />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
         {/* Distribution Selector */}
@@ -303,7 +268,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-neutral-900 bg-neutral-950 py-6 text-center text-xs text-neutral-500 mt-12">
         <p>
-          DistriLab • Calculadora y Visualizador de Distribuciones de Probabilidad • Compatible 100% con Vercel
+          Proyecto Estadística • Calculadora y Visualizador de Distribuciones de Probabilidad
         </p>
       </footer>
 

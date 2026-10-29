@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "DistriLab - Calculadora Interactiva de Distribuciones Estadísticas",
-  description: "Visualizador interactivo y calculadora de distribuciones Normal, t-Student, Chi-cuadrado, F, Gamma, Binomial y Poisson con frontend y backend desplegable en Vercel.",
+  title: "Proyecto Estadística - Calculadora Interactiva de Distribuciones Estadísticas",
+  description: "Visualizador interactivo y calculadora de distribuciones Normal, t-Student, Chi-cuadrado, F, Gamma, Binomial y Poisson.",
 };
 
 export default function RootLayout({

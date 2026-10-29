@@ -1,4 +1,4 @@
-# DistriLab - Calculadora Interactiva de Distribuciones Estadísticas
+# Proyecto Estadística - Calculadora Interactiva de Distribuciones Estadísticas
 
 Aplicación interactiva fullstack construida con **Next.js (App Router)**, **TypeScript**, **Tailwind CSS** y **KaTeX**, lista para desplegarse en **Vercel**.
 
